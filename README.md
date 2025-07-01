@@ -1,100 +1,111 @@
-# Frontend Mentor - Contact form
+# Frontend Mentor - Contact form solution
 
-![Design preview for the Contact form coding challenge](./design/desktop-preview.jpg)
+This is a solution to the [Contact form challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/contact-form--G-hYlqKJj). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for checking out this front-end coding challenge.
+- [Overview](#overview)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+## Overview
 
-**To do this challenge, you need a good understanding of HTML, CSS and JavaScript.**
+### Screenshot
 
-## The challenge
+![](./image.png)
 
-Your challenge is to build out this contact form and get it looking as close to the design as possible. Pay particular attention to making this form accessible. Building accessible forms is a key skill for front-end developers. So this is a perfect challenge to practice.
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+### Links
 
-Your users should be able to: 
+- Solution URL: [Solution here](https://github.com/MariaCMontO/contact-form-cmo)
 
-- Complete the form and see a success toast message upon successful submission
-- Receive form validation messages if:
-  - A required field has been missed
-  - The email address is not formatted correctly
-- Complete the form only using their keyboard
-- Have inputs, error messages, and the success message announced on their screen reader
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
+## My process
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+### Built with
 
-## Where to find everything
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- Grid
+- JavaScript
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+### What I learned
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+With this project, I learned how to include accesibily. It's important to include atributes like aria-hidden, aria-describedby, aria-polite, aria-invalid, etc. Other important fact its about input types, like radio or checkbox. When you are going to use a radio group is important to surround it with a <fieldset> and its <legend>. In this project I learned how to use toggle to change the style regarding an state, which is so useful to make thing easier.
 
-If you would like the design files (we provide Sketch & Figma versions) to inspect the design in more detail, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+```html
+<fieldset>
+          <div>
+            <legend>Query Type</legend>
+          </div>
+          <div class="query-type-container">
+            <div class="query-type">
+              <label for="general-enquiry">
+                <input class="" type="radio" name="query-type" id="general-enquiry"
+                  aria-describedby="query-type-required">
+                <span>
+                  <img class="is-hidden " src="/assets/images/icon-radio-selected.svg" alt="" aria-hidden="true">
+                </span>
+                General Enquiry
+              </label>
+            </div>
+            <div class="query-type">
+              <label for="support-request">
+                <input class="" type="radio" name="query-type" id="support-request"
+                  aria-describedby="query-type-required">
+                <span>
+                  <img class="is-hidden " src="/assets/images/icon-radio-selected.svg" alt="" aria-hidden="true">
+                </span>
+                Support Request
+              </label>
+            </div>
+          </div>
+          <span id="query-type-required" class="is-hidden error-message" aria-live="polite"> Please select a query
+            type</span>
+        </fieldset>
 
-All the required assets for this project are in the `/assets` folder. The images are already exported for the correct screen size and optimized.
+```
+```js
+function textValidation(form) {
+    //Selecciono todos los input de texto (nombre ,email y mensaje)
+    const inputText = Array.from(form.querySelectorAll('input[type=text], input[type=email], textarea'))
+    let isEmptyTotal = false;
 
-We also include variable and static font files for the required fonts for this project. You can choose to either link to Google Fonts or use the local font files to host the fonts yourself. Note that we've removed the static font files for the font weights that aren't needed for this project.
+    //Iteramos sobre cada input
+    inputText.forEach((input) => {
+        //Seleccionamos el error correspondiente al campo
+        const error = form.querySelector(`#${input.name}-required`)
+        const isEmpty = input.value.trim() === ''
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+        //Si algún input está vacío (isEmpty === true), entonces isEmptyTotal se vuelve true. Una vez que es true,
+        // ya no vuelve a cambiar, porque el OR || no re-asigna si isEmptyTotal ya tiene valor verdadero.
+        isEmptyTotal ||= isEmpty ;
 
-## Building your project
+        //Si el campo esta vacio, añadimos el estilo de error al input y quitamos el estilo de is-hidden del error.
+        error.classList.toggle('is-hidden', !isEmpty)
+        input.classList.toggle('error', isEmpty)
+    })
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+    return !isEmptyTotal
+}
+```
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+### Continued development
 
-## Deploying your project
+I definitely want to keep developing interfaces with JavaScript functions, in order to make them more interactive.
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
+### Useful resources
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+## Author
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+- Frontend Mentor - [@MariaCMontO](https://github.com/MariaCMontO)
 
-## Create a custom `README.md`
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
-
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
-
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
-
-## Submitting your solution
-
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
-
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
-
-## Sharing your solution
-
-There are multiple places you can share your solution:
-
-1. Share your solution page in the **#finished-projects** channel of our [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
-
-**Have fun building!** 🚀
+## Acknowledgments
